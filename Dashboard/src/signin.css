@@ -1,0 +1,86 @@
+.signin-form{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 40px;
+        margin-right: 40px;
+  
+  }
+  label{
+    padding: 0.25rem 0;
+    text-align: left;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-size:27px;
+    margin-bottom: 5px;
+  }
+  .heading{
+    margin:0 0 15px 155px;
+    color: rgb(255, 255, 255) !important
+    
+    
+  }
+  .signin{
+    padding-top: 0px;
+  padding-bottom: 150px;
+  padding-left: 10px;
+  padding-right: 10px;
+  /* background-color: rgb(255, 255, 255); */
+  }
+  .main-signin {
+   
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+    
+}
+
+  .btn-signin{
+    border: none;
+    background-color: rgb(0, 0, 0);
+    padding: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    font-size: 30px;
+    
+    
+  }
+ 
+  
+  .link-btn-signin{
+    background: none;
+    color: rgb(0, 31, 184);
+    text-decoration: underline;
+    font-size: 20px;
+    border: 0;
+    cursor: pointer;
+  }
+  .input-signin{
+        margin:0.25rem ;
+        padding: 1rem;
+        border: none;
+        border-radius:0.5rem ;
+        font-size: 40px;
+        
+      }
+.btn-signin{
+ border: none;
+  background-color: #000000;
+  padding: 25px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+      }
+  /* div{
+    margin: 0 0 114px 130px;
+  } */
+  .heading{
+    color:white;
+  }
