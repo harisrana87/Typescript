@@ -18,8 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './listitems';
-import {useNavigate} from "react-router-dom"
-
+// import {useNavigate} from "react-router-dom"
 import Chart from './chart';
 import  "./dashboard.css"
 // import Deposits from './Deposits';
@@ -39,7 +38,6 @@ function Copyright(props: any) {
 }
 
 const drawerWidth: number = 240;
-
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -72,7 +70,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
-        
       }),
       boxSizing: 'border-box',
       ...(!open && {
@@ -95,7 +92,7 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -103,7 +100,6 @@ export default function Dashboard() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
-      
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
@@ -149,15 +145,9 @@ export default function Dashboard() {
             }}
           >
             <IconButton onClick={toggleDrawer}>
-            
-            
               <ChevronLeftIcon />
-              
             </IconButton>
-            
           </Toolbar>
-          <button  className=" link-btn" style={{backgroundColor:'black', color:'white', }} onClick={()=>navigate("/signup")}>Sign UP</button>
-          <button className="link-btn"  style={{backgroundColor:'black', color:'white'}} onClick={()=>navigate("/signin")} type="submit">Sign IN</button>
           <Divider />
           <List component="nav">
             {mainListItems}
@@ -183,7 +173,6 @@ export default function Dashboard() {
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
-                
                 <Paper
                   sx={{
                     p: 2,
@@ -192,10 +181,7 @@ export default function Dashboard() {
                     flexDirection: 'column',
                     height: 440,
                   }}
-                  
-                >
-                  
-                  <h2 className="chartmain" >Today</h2>
+                ><h2 className="chartmain" >Today</h2>
                   <Chart />
                   
                 </Paper>
@@ -218,7 +204,6 @@ export default function Dashboard() {
                   {/* <Deposits /> */}
                 </Paper>
               </Grid>
-              
               {/* Recent Orders */}
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
