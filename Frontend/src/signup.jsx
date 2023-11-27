@@ -8,7 +8,6 @@ function Signup() {
   const [fname, setFirstName] = useState("");
   const [lname, setLastName] = useState("");
   const navigate = useNavigate();
-  const history = useNavigate(); // Added parentheses to the useHistory function call
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,27 +34,32 @@ function Signup() {
     }
   };
 
-  const PostData = async (e) => {
+  const postData = async (e) => {
     e.preventDefault();
-    const user = { fname, lname, email, password }; // Fixed variable name
+    const user = { fname, lname, email, password };
 
-    const res = await fetch("/Signup", {
-      method: "POST", // Removed semicolon and fixed method name
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user), // Fixed variable name
-    });
+    try {
+      const response = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
-    const data = await res.json(); // Fixed variable name
+      const data = await response.json();
 
-    if (data.status === 422 || !data) {
-      window.alert("Invalid Registration");
-      console.log("Invalid Registration");
-    } else {
-      window.alert("Registered");
-      console.log("Registered");
-      navigate.push("/signin");
+      if (response.ok) {
+        window.alert("Registered");
+        console.log("Registered");
+        navigate("/signin");
+      } else {
+        window.alert("Invalid Registration");
+        console.log("Invalid Registration");
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle any network or server errors
     }
   };
 
@@ -97,7 +101,7 @@ function Signup() {
           <div className="name-input">
             <input
               className="input-signup"
-              type="name"
+              type="text"
               id="fname"
               name="fname"
               value={fname}
@@ -105,36 +109,35 @@ function Signup() {
             />
             <input
               className="input-signup"
-              value={lname}
-              type="name"
+              type="text"
               id="lname"
               name="lname"
+              value={lname}
               onChange={handleInputs}
             />
           </div>
           <label htmlFor="email">Email</label>
           <input
             className="input-signup"
-            value={email}
-            onChange={handleInputs}
             type="email"
             id="email"
             name="email"
+            value={email}
+            onChange={handleInputs}
           />
           <label htmlFor="password">Password</label>
           <input
             className="input-signup"
             type="password"
             id="password"
+            name="password"
             value={password}
             onChange={handleInputs}
-            name="password"
           />
           <button
             className="link-btn-signup"
-            onClick={PostData} // Removed unnecessary curly braces and parentheses
+            onClick={postData}
             type="submit"
-            value="Register"
           >
             SIGN UP
           </button>

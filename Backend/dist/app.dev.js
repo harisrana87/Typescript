@@ -1,28 +1,30 @@
 "use strict";
 
-// Importing the express 
-var express = require("express");
+var _express = _interopRequireDefault(require("express"));
 
-var app = express(); // Importing dotnet `Storing configuration in the env separate from code `
+var _dotenv = _interopRequireDefault(require("dotenv"));
 
-var dotenv = require('dotenv');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-dotenv.config({
+// Importing the express
+var app = (0, _express["default"])(); // Importing dotenv `Storing configuration in the env separate from code `
+
+_dotenv["default"].config({
   path: './config/config.env'
 }); /// IMPORTING DOTENV
+
 
 require('./Db/conn'); /// Mongodb importing from db file
 
 
-app.use(express.json()); // using it to understand json formate i.e. its middleware
+app.use(_express["default"].json()); // using it to understand JSON format i.e., it's middleware
 
-app.use(require('./router/auth')); // router file link i.e. its middleware
+app.use(require('./router/auth')); // router file link i.e., its middleware
 
 var User = require('./Model/userSchema'); // Importing User Schema
-//Displaying the page at 3000 port 
+// Displaying the page at 3000 port
 
 
-var PORT = process.env.PORT || 3000;
-app.listen(PORT, function () {
-  console.log("server is running at port ".concat(PORT));
+app.listen(3000, function () {
+  console.log("Server started on port 3000");
 });
