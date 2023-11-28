@@ -5,9 +5,11 @@ var signin_1 = require("./signin");
 require("./App.css");
 var customers_1 = require("./customers");
 var signup_1 = require("./signup");
+// import forget from './forget';
 var dashboard_1 = require("./dashboard");
 var react_router_dom_1 = require("react-router-dom");
 var orders_1 = require("./orders");
+var forget_1 = require("./forget");
 function App() {
     return (react_1["default"].createElement("div", { className: "App" },
         react_1["default"].createElement(react_1["default"].Fragment, null,
@@ -18,6 +20,7 @@ function App() {
                     react_1["default"].createElement(react_router_dom_1.Route, { path: "/Customers", element: react_1["default"].createElement(customers_1["default"], null) }),
                     react_1["default"].createElement(react_router_dom_1.Route, { path: "/Orders", element: react_1["default"].createElement(orders_1["default"], null) }),
                     react_1["default"].createElement(react_router_dom_1.Route, { path: "/signin", element: react_1["default"].createElement(signin_1["default"], null) }),
-                    react_1["default"].createElement(react_router_dom_1.Route, { path: "/Signup", element: react_1["default"].createElement(signup_1["default"], null) }))))));
+                    react_1["default"].createElement(react_router_dom_1.Route, { path: "/Signup", element: react_1["default"].createElement(signup_1["default"], null) }),
+                    react_1["default"].createElement(react_router_dom_1.Route, { path: "/forget", element: react_1["default"].createElement(forget_1["default"], null) }))))));
 }
 exports["default"] = App;

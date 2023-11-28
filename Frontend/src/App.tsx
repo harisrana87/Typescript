@@ -3,13 +3,15 @@ import Signin from './signin';
 import './App.css';
 import Customers from './customers';
 import Signup from './signup';
+// import forget from './forget';
 
 import Dashboard from './dashboard';
 
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Orders from './orders';
-import signin from './signin';
+import Forget from './forget';
+
 
 function App() {
   return (
@@ -24,6 +26,7 @@ function App() {
           <Route path="/Orders" element={<Orders/>} />
           <Route path="/signin" element={<Signin/>} />
           <Route path="/Signup" element={<Signup/>} />
+          <Route path="/forget" element={<Forget/>} />
 
 
         </Routes>

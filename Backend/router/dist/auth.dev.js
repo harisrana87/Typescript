@@ -2,11 +2,11 @@
 
 var express = require("express");
 
-var bcrypt = require("bcryptjs");
-
-var router = express.Router();
+var crypto = require("crypto");
 
 var jwt = require('jsonwebtoken');
+
+var router = express.Router();
 
 var User = require("../Model/userSchema");
 
@@ -14,7 +14,7 @@ router.get("/", function (req, res) {
   res.send("Hello");
 });
 router.post("/register", function _callee(req, res) {
-  var _req$body, fname, lname, email, password, userExist, user;
+  var _req$body, fname, lname, email, password, userExist, hashedPassword, user;
 
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
@@ -52,38 +52,43 @@ router.post("/register", function _callee(req, res) {
           }));
 
         case 12:
+          // Using basic hashing with the crypto module
+          hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
           user = new User({
             fname: fname,
             lname: lname,
             email: email,
-            password: password
+            password: hashedPassword
           });
-          _context.next = 15;
+          _context.next = 16;
           return regeneratorRuntime.awrap(user.save());
 
-        case 15:
+        case 16:
           res.status(201).json({
             message: "User registered successfully"
           });
 
-        case 16:
-          _context.next = 21;
+        case 17:
+          _context.next = 23;
           break;
 
-        case 18:
-          _context.prev = 18;
+        case 19:
+          _context.prev = 19;
           _context.t0 = _context["catch"](4);
           console.log(_context.t0);
+          res.status(500).json({
+            error: "Internal server error"
+          });
 
-        case 21:
+        case 23:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[4, 18]]);
+  }, null, null, [[4, 19]]);
 });
 router.post("/signin", function _callee2(req, res) {
-  var _req$body2, email, password, userLogin, isPasswordMatch, token;
+  var _req$body2, email, password, userLogin, hashedPassword, token;
 
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
@@ -120,14 +125,11 @@ router.post("/signin", function _callee2(req, res) {
           }));
 
         case 9:
-          _context2.next = 11;
-          return regeneratorRuntime.awrap(bcrypt.compare(password, userLogin.password));
+          // Using basic hashing with the crypto module for comparison
+          hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
 
-        case 11:
-          isPasswordMatch = _context2.sent;
-
-          if (isPasswordMatch) {
-            _context2.next = 14;
+          if (!(hashedPassword !== userLogin.password)) {
+            _context2.next = 12;
             break;
           }
 
@@ -135,11 +137,11 @@ router.post("/signin", function _callee2(req, res) {
             error: "Invalid credentials"
           }));
 
-        case 14:
-          // Generate an authentication token if the credentials match
+        case 12:
+          // Replace 'your_secret_key_here' with your actual secret key
           token = jwt.sign({
             _id: userLogin._id
-          }, process.env.SECRET_KEY);
+          }, 'your_secret_key_here');
           res.cookie("jwtoken", token, {
             expires: new Date(Date.now() + 25892000000),
             httpOnly: true
@@ -147,22 +149,77 @@ router.post("/signin", function _callee2(req, res) {
           res.json({
             message: "Successfully logged in"
           });
-          _context2.next = 23;
+          _context2.next = 21;
           break;
 
-        case 19:
-          _context2.prev = 19;
+        case 17:
+          _context2.prev = 17;
           _context2.t0 = _context2["catch"](0);
-          console.log(_context2.t0);
+          console.error(_context2.t0);
           res.status(500).json({
             error: "Internal server error"
           });
 
-        case 23:
+        case 21:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 19]]);
+  }, null, null, [[0, 17]]);
+});
+router.post('/reset-password', function _callee3(req, res) {
+  var _req$body3, email, password, user;
+
+  return regeneratorRuntime.async(function _callee3$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _req$body3 = req.body, email = _req$body3.email, password = _req$body3.password;
+          _context3.prev = 1;
+          _context3.next = 4;
+          return regeneratorRuntime.awrap(User.findOne({
+            email: email
+          }));
+
+        case 4:
+          user = _context3.sent;
+
+          if (user) {
+            _context3.next = 7;
+            break;
+          }
+
+          return _context3.abrupt("return", res.status(404).json({
+            error: 'User not found'
+          }));
+
+        case 7:
+          // Update the user's password
+          user.password = password;
+          _context3.next = 10;
+          return regeneratorRuntime.awrap(user.save());
+
+        case 10:
+          // Password updated successfully, send a response
+          res.status(200).json({
+            message: 'Password changed successfully'
+          });
+          _context3.next = 17;
+          break;
+
+        case 13:
+          _context3.prev = 13;
+          _context3.t0 = _context3["catch"](1);
+          console.error(_context3.t0);
+          res.status(500).json({
+            error: 'Internal server error'
+          });
+
+        case 17:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[1, 13]]);
 });
 module.exports = router;
